@@ -21,5 +21,5 @@ func TestAddUpper(t *testing.T) {
 }
 
 func TestHello(t *testing.T) {
-	fmt.Println("testHell被调用")
+	fmt.Println("testHello被调用")
 }
