@@ -23,6 +23,6 @@ func main()  {
 	newCat := <- allChan
 
 	fmt.Printf("newCat=%T, newCat=%v \n", newCat, newCat)
-	a := newCat.(Cat)
+	a := newCat.(Cat)//类型断言
 	fmt.Printf("newCat.Name=%v", a.Name)
 }
