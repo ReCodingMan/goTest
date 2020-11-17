@@ -56,7 +56,7 @@ func main() {
 	go PutNum(intChan)
 
 	//开启4个线程，从 intChan 取出数据，并判断是否为素数
-	for i:=0; i<4; i++ {
+	for i:=0; i<8; i++ {
 		go PrimeNum(intChan, primeChan, resultChan)
 	}
 
