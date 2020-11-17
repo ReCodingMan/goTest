@@ -24,5 +24,5 @@ func main()  {
 
 	fmt.Printf("newCat=%T, newCat=%v \n", newCat, newCat)
 	a := newCat.(Cat)
-	fmt.Printf("newCat.aa=%v", a.Name)
+	fmt.Printf("newCat.Name=%v", a.Name)
 }
