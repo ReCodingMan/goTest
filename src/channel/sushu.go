@@ -1,10 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 //初始化管道
 func PutNum(intChan chan int) {
-	for i:=0; i<8000; i++ {
+	for i:=0; i<200000; i++ {
 		intChan <- i
 	}
 	close(intChan)
@@ -43,11 +46,12 @@ func PrimeNum(intChan chan int, primeChan chan int, resultChan chan bool)  {
 
 func main() {
 
-	intChan := make(chan int, 1000)
-	primeChan := make(chan int, 1000) //放入结果
+	intChan := make(chan int, 8000)
+	primeChan := make(chan int, 200000) //放入结果
 	//标识退出的管道
 	resultChan := make(chan bool, 4)
 
+	start := time.Now().Unix()
 	//开启一个线程，向 intChan 放入1-8000个数
 	go PutNum(intChan)
 
@@ -61,15 +65,18 @@ func main() {
 			<-resultChan
 		}
 
+		end := time.Now().Unix()
+		fmt.Println("使用时间耗时为=", end - start)
+
 		close(primeChan)
 	}()
 
-	for  {
-		res, ok := <-primeChan
+	for {
+		_, ok := <-primeChan
 		if !ok {
 			break
 		}
-		fmt.Printf("素数=%d\n", res)
+		//fmt.Printf("素数=%d\n", res)
 	}
 	fmt.Println("main线程退出")
 }
