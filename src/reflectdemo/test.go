@@ -26,4 +26,12 @@ func reflect03(b interface{}) {
 func main() {
 	var v float64 = 1.2
 	reflect03(v)
+
+	var str string = "tom"
+	fs := reflect.ValueOf(&str)
+	fmt.Println(fs.Kind())
+	fs.Elem().SetString("jack")
+	fmt.Printf("%v\n", str)
 }
+
+
