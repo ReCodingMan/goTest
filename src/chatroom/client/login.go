@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net"
+	"time"
 )
 
 //写一个函数，完成登录
@@ -37,6 +38,7 @@ func login(userId int, userPwd string) (err error) {
 	data, err := json.Marshal(loginMes)
 	if err != nil {
 		fmt.Println("loginMes Marshal err=", err)
+		return
 	}
 
 	//5、把data赋给 mes.Data
@@ -45,7 +47,8 @@ func login(userId int, userPwd string) (err error) {
 	//6、将 mes进行序列化
 	data, err = json.Marshal(mes.Data)
 	if err != nil {
-		fmt.Println("mes.Data Marshal err=", err)
+		fmt.Println("json.Marshal err=", err)
+		return
 	}
 
 	//7、先把data长度发送给服务器
@@ -61,6 +64,16 @@ func login(userId int, userPwd string) (err error) {
 		return
 	}
 
-	fmt.Printf("客户端，发送消息的长度=%d\n", len(data))
+	//发送消息本身
+	_, err = conn.Write(data)
+	if err != nil {
+		fmt.Println("conn.Write(data) fail =", err)
+		return
+	}
+
+	time.Sleep(5 * time.Second)
+	fmt.Println("休眠了5s...")
+
+	//这里还需要处理服务器端返回的消息
 	return
 }
