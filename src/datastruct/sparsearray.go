@@ -49,8 +49,25 @@ func main() {
 		fmt.Println()
 	}
 
-	//输出稀疏数组
+	//4、输出稀疏数组
 	for i, valNode := range sparseArr {
 		fmt.Printf("%d: %d %d %d\n", i, valNode.row, valNode.col, valNode.val)
 	}
+
+	//5、恢复原始数组
+	var chessMap2 [11][11]int
+	//遍历稀疏数组/文件每一行
+	for i, valNode := range sparseArr {
+		if i == 0 {
+			continue
+		}
+		chessMap2[valNode.row][valNode.col] = valNode.val
+	}
+	for _,v := range chessMap2 {
+		for _,v2 := range v {
+			fmt.Printf("%d\t", v2)
+		}
+		fmt.Println()
+	}
+
 }
