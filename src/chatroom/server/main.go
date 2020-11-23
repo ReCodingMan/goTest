@@ -53,6 +53,8 @@ func serverProcessLogin(conn net.Conn, mes *message.Message) (err error) {
 	}
 
 	//先声明一个 resMes
+	var resMes message.Message
+	resMes.Type = message.LoginResMesType
 
 	//如果用户id=100，密码=123456，认为合法，否则不合法
 	if loginMes.UserId == 100 && loginMes.UserPwd == "123456" {
@@ -60,6 +62,7 @@ func serverProcessLogin(conn net.Conn, mes *message.Message) (err error) {
 	} else {
 		//不合法
 	}
+	return
 }
 
 //编写一个ServerProcessMes 函数
