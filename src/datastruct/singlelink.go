@@ -51,6 +51,27 @@ func InsertHeroNode2(head *HeroNode, newHeroNode *HeroNode) {
 	temp.next = newHeroNode
 }
 
+func DelHeroNode(head *HeroNode, id int) {
+	temp := head
+	flag := false
+	for {
+		if temp.next == nil {
+			break
+		} else if temp.next.no == id {
+			flag = true
+			//找到最后
+			break
+		}
+		temp = temp.next
+	}
+	if !flag {
+		fmt.Println("没找到，没法删除...")
+		return
+	}
+	//删除
+	temp.next = temp.next.next
+}
+
 //显示链表的所有信息
 func ListHeroNode(head *HeroNode) {
 	temp := head
@@ -94,6 +115,9 @@ func main() {
 	InsertHeroNode2(head, hero1)
 	InsertHeroNode2(head, hero2)
 	InsertHeroNode2(head, hero3)
+	DelHeroNode(head,4)
+	DelHeroNode(head,1)
+	DelHeroNode(head,3)
 	//4、显示
 	ListHeroNode(head)
 }
