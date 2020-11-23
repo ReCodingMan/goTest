@@ -25,6 +25,17 @@ func (this *Queue) AddQueue(val int) (err error) {
 	return
 }
 
+//取出队列
+func (this *Queue) GetQueue() (val int, err error) {
+	if this.front == this.rear {
+		return -1, errors.New("queue empty")
+	}
+
+	this.front++
+	val = this.array[this.front]
+	return val, err
+}
+
 //显示队列，从队首遍历到队尾
 func (this *Queue) ShowQueue() {
 	fmt.Println("队列当前情况是：")
@@ -60,7 +71,12 @@ func main() {
 					fmt.Println("加入队列成功")
 				}
 			case "get":
-				fmt.Println("get")
+				val, err := queue.GetQueue()
+				if err != nil {
+					fmt.Println(err.Error())
+				} else {
+					fmt.Println("取出了", val)
+				}
 			case "show":
 				queue.ShowQueue()
 			case "exit":
