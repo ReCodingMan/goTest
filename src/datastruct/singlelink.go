@@ -26,6 +26,31 @@ func InsertHeroNode(head *HeroNode, newHeroNode *HeroNode) {
 	temp.next = newHeroNode
 }
 
+//按编号从小到大排序
+func InsertHeroNode2(head *HeroNode, newHeroNode *HeroNode) {
+	//先找到该链表最后节点
+	temp := head
+	flag := true
+	for {
+		if temp.next == nil {
+			break
+		} else if temp.next.no > newHeroNode.no {
+			//找到最后
+			break
+		} else if temp.next.no == newHeroNode.no {
+			flag = false
+			break
+		}
+		temp = temp.next
+	}
+	if !flag {
+		fmt.Println("已经存在，无法插入...")
+		return
+	}
+	newHeroNode.next = temp.next
+	temp.next = newHeroNode
+}
+
 //显示链表的所有信息
 func ListHeroNode(head *HeroNode) {
 	temp := head
@@ -55,14 +80,20 @@ func main() {
 		nickname: "及时雨",
 	}
 	hero2 := &HeroNode{
-		no: 2,
+		no: 4,
 		name: "卢俊义",
 		nickname: "玉麒麟",
 	}
+	hero3 := &HeroNode{
+		no: 2,
+		name: "林冲",
+		nickname: "豹子头",
+	}
 
 	//3、加入
-	InsertHeroNode(head, hero1)
-	InsertHeroNode(head, hero2)
+	InsertHeroNode2(head, hero1)
+	InsertHeroNode2(head, hero2)
+	InsertHeroNode2(head, hero3)
 	//4、显示
 	ListHeroNode(head)
 }
