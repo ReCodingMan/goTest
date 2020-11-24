@@ -55,9 +55,56 @@ func ShowBoy(first *Boy) {
 		}
 		curBoy = curBoy.Next
 	}
+	fmt.Println()
+}
+
+//首指针，从第几个开水，报数
+func PlayGame(first *Boy, startNo int, countNum int) {
+
+	if first.Next == nil {
+		fmt.Println("空的链表")
+		return
+	}
+
+	//开始 < 小孩数量
+
+	tail := first
+	//将 tail 指到最后，方便后面删除
+	for {
+		if tail.Next == first {
+			break
+		}
+		tail = tail.Next
+	}
+
+	//让 first 移动到 startNo
+	for i:=1; i<=startNo-1; i++ {
+		first = first.Next
+		tail = tail.Next
+	}
+
+	//开始数数，开始删除
+	for {
+		for i:=1; i<=countNum-1; i++ {
+			first = first.Next
+			tail = tail.Next
+		}
+		fmt.Printf("编号为%d出列 ->\n", first.No)
+		//删除 first 节点
+		first = first.Next
+		tail.Next = first
+
+		//退出条件
+		if tail == first {
+			break
+		}
+	}
+
+	fmt.Printf("最后的编号为%d", first.No)
 }
 
 func main() {
 	first := AddBoy(5)
 	ShowBoy(first)
+	PlayGame(first, 2, 3)
 }
