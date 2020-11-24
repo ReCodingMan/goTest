@@ -50,9 +50,14 @@ func InsertHeroNode2(head *HeroNode, newHeroNode *HeroNode) {
 		return
 	}
 	newHeroNode.next = temp.next
+	newHeroNode.pre = temp
+	if temp.next != nil {
+		temp.next.pre = newHeroNode
+	}
 	temp.next = newHeroNode
 }
 
+//双向链表删除节点
 func DelHeroNode(head *HeroNode, id int) {
 	temp := head
 	flag := false
@@ -66,12 +71,16 @@ func DelHeroNode(head *HeroNode, id int) {
 		}
 		temp = temp.next
 	}
-	if !flag {
+	if flag {
+		temp.next = temp.next.next
+		if temp.next != nil {
+			temp.next.pre = temp
+		}
+	} else {
 		fmt.Println("没找到，没法删除...")
 		return
 	}
 	//删除
-	temp.next = temp.next.next
 }
 
 //显示链表的所有信息
