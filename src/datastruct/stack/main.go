@@ -25,6 +25,16 @@ func (this *Stack) Push(val int) (err error) {
 	return
 }
 
+func (this *Stack) Pop() (val int, err error) {
+	if this.Top == -1 {
+		fmt.Println("栈空")
+		return 0, errors.New("栈空")
+	}
+	val = this.arr[this.Top]
+	this.Top--
+	return val, nil
+}
+
 //遍历栈，从栈底开始
 func (this *Stack) List() {
 	if this.Top == -1 {
@@ -38,6 +48,7 @@ func (this *Stack) List() {
 }
 
 func main() {
+
 	stack := Stack{
 		MaxTop: 5,
 		Top: -1, //表示栈为空
@@ -49,4 +60,9 @@ func main() {
 	stack.Push(4)
 	stack.Push(5)
 	stack.List()
+
+	val, _ := stack.Pop()
+	fmt.Println("出栈", val)
+	stack.List()
+
 }
