@@ -100,13 +100,14 @@ func main() {
 		Top: -1,
 	}
 
-	exp := "3+2*6-2"
+	exp := "30+30*6-4"
 	//定义 index，帮助扫描 exp
 	index := 0
 	num1 := 0
 	num2 := 0
 	oper := 0
 	result := 0
+	keepNum := ""
 
 	for {
 		ch := exp[index:index+1] //字符串
@@ -134,8 +135,20 @@ func main() {
 			}
 
 		} else {
-			val ,_ := strconv.ParseInt(ch, 10, 64)
-			numStack.Push(int(val))
+
+			keepNum += ch
+
+			if index == len(exp) - 1 {
+				val ,_ := strconv.ParseInt(keepNum, 10, 64)
+				numStack.Push(int(val))
+			} else {
+				if operStack.IsOper(int([]byte(exp[index+1:index+2])[0])) {
+					val ,_ := strconv.ParseInt(keepNum, 10, 64)
+					numStack.Push(int(val))
+					keepNum = ""
+				}
+			}
+
 		}
 
 		if index+1 == len(exp) {
