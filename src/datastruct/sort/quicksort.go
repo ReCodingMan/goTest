@@ -1,8 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
 
-func QuickSort(left int, right int, array *[6]int) {
+func QuickSort(left int, right int, array *[80000]int) {
 	l := left
 	r := right
 
@@ -44,8 +48,19 @@ func QuickSort(left int, right int, array *[6]int) {
 
 func main() {
 
-	arr := [6]int{-9,78,0,23,-567,70}
-	QuickSort(0,5, &arr)
-	fmt.Println(arr)
+	var arr [80000]int
+	for i:=0; i<80000; i++ {
+		rand.Seed(time.Now().UnixNano())
+		arr[i] = rand.Intn(900000)
+	}
+
+	start := time.Now().Unix()
+	QuickSort(0, len(arr)-1, &arr)
+	end := time.Now().Unix()
+	fmt.Printf("快速排序耗时=%d秒", end-start)
+
+	//arr := [6]int{-9,78,0,23,-567,70}
+	//QuickSort(0,5, &arr)
+	//fmt.Println(arr)
 
 }
