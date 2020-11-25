@@ -8,7 +8,7 @@ import (
 type Stack struct {
 	MaxTop int	//栈最大存放个数
 	Top int	//栈顶
-	arr [5]int
+	arr [20]int
 }
 
 func (this *Stack) Push(val int) (err error) {
