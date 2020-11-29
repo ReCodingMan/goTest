@@ -1,12 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 //定义emp
 type Emp struct {
 	Id int
 	Name string
 	Next *Emp
+}
+
+//显示自己
+func (this *Emp) ShowMe() {
+	fmt.Printf("链表%d 找到雇员%d \n", this.Id % 7, this.Id)
 }
 
 //定义EmpLink
@@ -62,6 +70,20 @@ func (this *EmpLink) ShowLink(no int) {
 	fmt.Println()
 }
 
+//根据id查找对应雇员，如果没有就返回nil
+func (this *EmpLink) FindById(id int) *Emp {
+	cur := this.Head
+	for {
+		if cur != nil && cur.Id == id {
+			return cur
+		} else if cur == nil {
+			break
+		}
+		cur = cur.Next
+	}
+	return nil
+}
+
 //定义hashtable，含有一个链表数组
 type HashTable struct {
 	LinkArr [7]EmpLink
@@ -78,6 +100,13 @@ func (this *HashTable) Insert(emp *Emp) {
 //编写散列方法
 func (this *HashTable) HashFun(id int) int {
 	return id % 7 //得到链表的下标
+}
+
+//编写一个方法，查找
+func (this *HashTable) FindById(id int) *Emp {
+	//找出在哪个链表
+	linkNo := this.HashFun(id)
+	return this.LinkArr[linkNo].FindById(id)
 }
 
 //显示hashtable所有雇员
@@ -114,8 +143,18 @@ func main() {
 			hashtable.Insert(emp)
 		case "show":
 			hashtable.ShowAll()
+		case "find":
+			fmt.Println("请输入id号：")
+			fmt.Scanln(&id)
+			emp := hashtable.FindById(id)
+			if emp == nil {
+				fmt.Printf("id=%d 的雇员不存在", id)
+			} else {
+				//编写一个方法，显示雇员信息
+				emp.ShowMe()
+			}
 		case "exit":
-			break
+			os.Exit(0)
 		default:
 			fmt.Println("输入有误")
 		}
