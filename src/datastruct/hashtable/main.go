@@ -37,9 +37,29 @@ func (this *EmpLink) Insert(emp *Emp) {
 			}
 		}
 
+		pre.Next = emp
+		emp.Next = cur
+	}
+}
 
+//显示当前链表信息
+func (this *EmpLink) ShowLink(no int) {
+	if this.Head == nil {
+		fmt.Printf("链表%d为空\n", no)
+		return
 	}
 
+	//遍历当前链表，并显示数据
+	cur := this.Head
+	for {
+		if cur != nil {
+			fmt.Printf("链表%d 雇员id=%d 名字=%s", no, cur.Id, cur.Name)
+			cur = cur.Next
+		} else {
+			break
+		}
+	}
+	fmt.Println()
 }
 
 //定义hashtable，含有一个链表数组
@@ -58,6 +78,13 @@ func (this *HashTable) Insert(emp *Emp) {
 //编写散列方法
 func (this *HashTable) HashFun(id int) int {
 	return id % 7 //得到链表的下标
+}
+
+//显示hashtable所有雇员
+func (this *HashTable) ShowAll() {
+	for i:=0; i<len(this.LinkArr); i++ {
+		this.LinkArr[i].ShowLink(i)
+	}
 }
 
 func main() {
