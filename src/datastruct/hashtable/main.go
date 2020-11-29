@@ -22,6 +22,7 @@ func (this *Emp) ShowMe() {
 type EmpLink struct {
 	Head *Emp
 }
+
 //添加员工方法，编号从小到大
 func (this *EmpLink) Insert(emp *Emp) {
 
