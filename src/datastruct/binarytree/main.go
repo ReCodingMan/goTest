@@ -1,10 +1,39 @@
 package main
 
+import "fmt"
+
 type Hero struct {
 	No int
 	Name string
 	Left *Hero
 	Right *Hero
+}
+
+//前序遍历
+func PreOrder(node *Hero) {
+	if node != nil {
+		fmt.Printf("no=%d name=%s\n", node.No, node.Name)
+		PreOrder(node.Left)
+		PreOrder(node.Right)
+	}
+}
+
+//中序遍历
+func InfixOrder(node *Hero) {
+	if node != nil {
+		InfixOrder(node.Left)
+		fmt.Printf("no=%d name=%s\n", node.No, node.Name)
+		InfixOrder(node.Right)
+	}
+}
+
+//后序遍历
+func PostOrder(node *Hero) {
+	if node != nil {
+		PostOrder(node.Left)
+		PostOrder(node.Right)
+		fmt.Printf("no=%d name=%s\n", node.No, node.Name)
+	}
 }
 
 func main() {
@@ -18,4 +47,24 @@ func main() {
 		No: 2,
 		Name: "吴用",
 	}
+
+	right1 := &Hero{
+		No: 2,
+		Name: "卢俊义",
+	}
+	root.Left = left1
+	root.Right = right1
+
+	right2 := &Hero{
+		No: 2,
+		Name: "林冲",
+	}
+	right1.Right = right2
+
+	//测试
+	PreOrder(root)
+	fmt.Println()
+	InfixOrder(root)
+	fmt.Println()
+	PostOrder(root)
 }
